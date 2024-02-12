@@ -1,0 +1,190 @@
+﻿@page
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>NoteApp API Server</title>
+</head>
+<body>
+    <header><h1>API Definition</h1></header>
+    <section>
+        <header>
+            <h2>Notes API <code>/api/notes</code></h2>
+        </header>
+        <p>To use the note API, call <c>/api/notes</c> with method POST, GET, DELETE, PUT.</p>
+        <hr>
+        <article>
+            <header>
+                <h4>Method: GET <c>api/notes</c></h4>
+            </header>
+            <p>Returns all notes in the database.</p>
+            <p>Example:</p>
+            <code>
+                <pre>
+async function getNotes() {
+    const request = await fetch('http://localhost:4200/api/notes/', {
+        headers: {
+            'Accept': 'application/json'
+        },
+        method: 'GET'
+    });
+    const data = await request.json();
+    console.log(data);
+}
+                </pre>
+            </code>
+            <p>Returns:</p>
+            <code>
+                <pre>
+[
+    {
+        "id": 1,
+        "name": "Note1",
+        "description": "Admin Note 1",
+        "dueDate": "2023-09-13T21:24:53.3487137",
+        "completionDate": "2023-09-11T21:24:53.3487137"
+    },
+    {
+        "id": 2,
+        "name": "name",
+        "description": null,
+        "dueDate": null,
+        "completionDate": null
+    },
+    {
+        "id": 3,
+        "name": "Note1",
+        "description": "Admin Note 3",
+        "dueDate": "2023-09-14T21:24:53.3487137",
+        "completionDate": null
+    }
+]
+                </pre>
+            </code>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h4>Method: GET <c>api/notes/[id]</c></h4>
+                <h5>where [id]: ID of the note to retrieve.</h5>
+            </header>
+            <p>Returns the note associated to the given id.</p>
+            <p>Example:</p>
+            <code>
+                <pre>
+async function getNote() {
+    const request = await fetch('http://localhost:4200/api/notes/1', {
+        headers: {
+            'Accept': 'application/json'
+        },
+        method: 'GET'
+    });
+    const data = await request.json();
+    console.log(data);
+}
+                </pre>
+            </code>
+            <p>Returns:</p>
+            <code>
+                <pre>
+{
+    "id": 1,
+    "name": "Note1",
+    "description": "Admin Note 1",
+    "dueDate": "2023-09-13T21:06:29.9249806",
+    "completionDate": "2023-09-11T21:06:29.9249806"
+}
+                </pre>
+            </code>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h4>Method: POST <c>api/notes</c></h4>
+            </header>
+            <p>Stores a new note into the database.</p>
+            <p>Example:</p>
+            <code>
+                <pre>
+async function addNote() {
+    const request = await fetch('http://localhost:4200/api/notes/', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({ name: 'new', description: 'new todo', dueDate: '2023-08-19T18:31:35.294Z', completionDate: '2023-08-19T18:31:35.294Z' }),
+    });
+    const data = await request.json();
+    console.log(data);
+}
+                </pre>
+            </code>
+            <p>Returns:</p>
+            <code>
+                <pre>
+{
+    "id": 4,
+    "name": "new",
+    "description": "new todo",
+    "dueDate": "2023-08-19T18:31:35.294Z",
+    "completionDate": "2023-08-19T18:31:35.294Z"
+}
+                </pre>
+            </code>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h4>Method: PUT <c>api/notes/[id]</c></h4>
+                <h5>where [id]: ID of the note to be edited.</h5>
+            </header>
+            <p>Updates an existing note in the database.</p>
+            <p>Example:</p>
+            <code>
+                <pre>
+async function updateNote() {
+    const request = await fetch('http://localhost:4200/api/notes/1', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'PUT',
+        body: JSON.stringify({ id: 1, name: 'overwrite', description: 'overwrite todo', dueDate: '2023-08-20T18:31:35.294Z', completionDate: '2023-08-20T18:31:35.294Z' }),
+    });
+    const data = request.status;
+    console.log(data);
+}
+                </pre>
+            </code>
+            <p>Returns the HTTP status code: HTTP Code 204</p>
+        </article>
+        <hr>
+        <article>
+            <header>
+                <h4>Method: DELETE <c>api/notes/[id]</c></h4>
+                <h5>where [id]: ID of the note to be deleted.</h5>
+            </header>
+            <p>Removes an existing note from the database.</p>
+            <p>Example:</p>
+            <code>
+                <pre>
+async function deleteNote() {
+    const request = await fetch('http://localhost:4200/api/notes/1', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'DELETE'
+    });
+    const data = request.status;
+    console.log(data);
+}
+                </pre>
+            </code>
+            <p>Returns the HTTP status code: HTTP Code 204</p>
+        </article>
+    </section>
+</body>
+</html>
+
